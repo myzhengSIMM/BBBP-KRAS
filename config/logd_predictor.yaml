@@ -1,0 +1,16 @@
+rtlogd:
+  # AttentiveFP-based GNN logD predictor (WangYitian123/RTlogD)
+  # Dataset: trained on chromatographic retention time data, fine-tuned for logD
+  # Used as a post-generation FILTERING criterion (not in reward function)
+  graph_feat_size: 300
+  num_layers: 3
+  num_timesteps: 1
+
+filter:
+  # CNS-focused logD range for BBB penetration (paper recommends 1–3)
+  logd_min: 1.0
+  logd_max: 3.0
+
+paths:
+  rtlogd_repo: path/to/RTlogD          # clone WangYitian123/RTlogD here
+  weights: path/to/RTlogD/final_model/RTlogD/model_pretrain_76.pth
