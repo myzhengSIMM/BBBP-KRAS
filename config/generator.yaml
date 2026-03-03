@@ -1,0 +1,35 @@
+model:
+  hidden_size: 128
+  latent_size: 128
+  num_layers: 2
+  dropout: 0.0
+
+pretraining:
+  batch_size: 100
+  total_steps: 50000
+  learning_rate: 1.0e-3
+  checkpoint_step: 5000
+  display_step: 500
+  validation_repetition_size: 20
+
+finetuning:
+  # RL policy gradient parameters
+  batch_size: 5
+  total_steps: 5000
+  learning_rate: 1.0e-4
+  discount_factor: 0.995
+  buffer_size: 10
+  buffer_batch_size: 10
+  checkpoint_step: 500
+  display_step: 50
+  validation_step: 50
+  validation_repetition_size: 5
+  # reward thresholds
+  threshold_property: 0.0
+  threshold_similarity: 0.4
+
+paths:
+  train_triplets: data/sample/train_triplets.txt
+  valid_smiles: data/sample/valid.txt
+  pretrain_output_dir: outputs/pretrain
+  finetune_output_dir: outputs/finetune

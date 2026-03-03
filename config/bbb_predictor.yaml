@@ -1,0 +1,33 @@
+model:
+  # AttentiveFP graph neural network classifier
+  # Reference: Xiong et al., J. Med. Chem. 2020, 63(16), 8749-8760
+  graph_feat_size: 200
+  num_layers: 2              # number of graph attention layers
+  num_timesteps: 2           # number of readout timesteps
+  dropout: 0.1
+  n_tasks: 1                 # binary classification (BBB+ / BBB-)
+
+featurizer:
+  # DGL-LifeSci AttentiveFP featurizers
+  atom_feat_size: 39         # AttentiveFPAtomFeaturizer output dim
+  bond_feat_size: 11         # AttentiveFPBondFeaturizer output dim
+
+training:
+  epochs: 100
+  batch_size: 64
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-5
+  n_splits: 5                # k-fold cross-validation
+
+active_learning:
+  # Strategy: "margin" (best per paper, MCC=0.8215) or "entropy"
+  strategy: margin
+  n_queries_per_round: 20    # molecules selected per AL iteration
+  max_rounds: 50             # maximum AL rounds (paper: 42 rounds)
+  initial_labeled_size: 100  # initial labeled pool size
+
+paths:
+  data: data/sample/bbb_data.csv
+  smiles_col: SMILES
+  label_col: BBB             # 1 = BBB+, 0 = BBB-
+  weights_dir: weights/bbb
