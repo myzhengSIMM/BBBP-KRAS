@@ -17,7 +17,7 @@ GalaxyAir is a structure-constrained molecular generation pipeline that optimize
 | RL fine-tuning | Policy gradient | Reward = 0.4 × affinity + 0.4 × BBBp + 0.2 × QED |
 | BBB predictor | AttentiveFP GNN + active learning (margin sampling) | MCC = 0.8215, 918 labeled molecules, 42 rounds |
 | KRAS affinity predictor | PBCNet (physics-informed graph attention) | Fine-tuned on 267 ChEMBL molecules, pChEMBL 3.79–10.02 |
-| logD filter | RTlogD (Random Forest) | Post-generation filter, optimal window 1–3 |
+| logD filter | RTlogD (AttentiveFP GNN) | Post-generation filter, optimal window 1–3 |
 | QED | `rdkit.Chem.QED.qed()` | Used in reward only |
 
 ---
@@ -29,7 +29,7 @@ GalaxyAir/
 ├── config/
 │   ├── generator.yaml          # VAE hyperparameters
 │   ├── bbb_predictor.yaml      # AttentiveFP + active learning config
-│   └── logd_predictor.yaml     # RTlogD Random Forest config
+│   └── logd_predictor.yaml     # RTlogD AttentiveFP GNN config
 ├── data/
 │   └── sample/
 │       ├── train_triplets.txt  # (Lead, Opt, Control) SMILES triplets
@@ -52,7 +52,7 @@ GalaxyAir/
 │   │   ├── encoder.py          # SmilesEncoder (bidirectional GRU)
 │   │   └── reward.py           # RewardFunction, ReplayBuffer
 │   ├── logd/
-│   │   ├── model.py            # RTLogDPredictor (Random Forest)
+│   │   ├── model.py            # RTLogDPredictor (AttentiveFP GNN)
 │   │   └── scorer.py           # LogDScorer + filter_smiles()
 │   ├── metrics/
 │   │   └── evaluation.py       # compute_kirs(), compute_cds(), evaluate_generation()
